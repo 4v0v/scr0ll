@@ -35,7 +35,7 @@ function Animation:new(delay, frames, mode, actions)
   @.mode    = mode or 'loop'
   @.actions = actions
 	@.pause   = false
-  @.trigger   = 0
+  @.trigger = 0
   @.frame   = 1
   @.dir     = 1
 end
