@@ -43,20 +43,20 @@ end
 
 function Play_scene:draw_inside_camera_bg()
 	lg.draw(clouds         , @.delta * .6,                         0, _, 2)
-	lg.draw(clouds         , @.delta * .6 + clouds:getWidth()    , 0, _, 2)
 	lg.draw(clouds         , @.delta * .6 + clouds:getWidth() * 2, 0, _, 2)
+	-- lg.draw(clouds         , @.delta * .6 + clouds:getWidth() * 2, 0, _, 2)
 	
-	lg.draw(mountains      , @.delta * .7,                           0, _, 2)
-	lg.draw(mountains      , @.delta * .7 +mountains:getWidth()    , 0, _, 2)
-	lg.draw(mountains      , @.delta * .7 +mountains:getWidth() * 2, 0, _, 2)
+	-- lg.draw(mountains      , @.delta * .7,                           0, _, 2)
+	-- lg.draw(mountains      , @.delta * .7 +mountains:getWidth()    , 0, _, 2)
+	-- lg.draw(mountains      , @.delta * .7 +mountains:getWidth() * 2, 0, _, 2)
 	
-	lg.draw(forest         , @.delta * .8,                        0, _, 2)
-	lg.draw(forest         , @.delta * .8 +forest:getWidth()    , 0, _, 2)
-	lg.draw(forest         , @.delta * .8 +forest:getWidth() * 2, 0, _, 2)
+	-- lg.draw(forest         , @.delta * .8,                        0, _, 2)
+	-- lg.draw(forest         , @.delta * .8 +forest:getWidth()    , 0, _, 2)
+	-- lg.draw(forest         , @.delta * .8 +forest:getWidth() * 2, 0, _, 2)
 	
-	lg.draw(back_grass_tree, @.delta * .9,                                 0, _, 2)
-	lg.draw(back_grass_tree, @.delta * .9 +back_grass_tree:getWidth()    , 0, _, 2)
-	lg.draw(back_grass_tree, @.delta * .9 +back_grass_tree:getWidth() * 2, 0, _, 2)
+	-- lg.draw(back_grass_tree, @.delta * .9,                                 0, _, 2)
+	-- lg.draw(back_grass_tree, @.delta * .9 +back_grass_tree:getWidth()    , 0, _, 2)
+	-- lg.draw(back_grass_tree, @.delta * .9 +back_grass_tree:getWidth() * 2, 0, _, 2)
 end
 
 function Play_scene:draw_inside_camera_fg()
