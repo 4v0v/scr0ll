@@ -15,8 +15,10 @@ function Play_scene:new()
 
 	@.bird_anim = Animation(.1, bird_frames)
 
-	@:add('rect', Rectangle(0, 0, 100, 100, {mode = 'fill', color = {.8, .3, .3}, centered = true}))
+	@:add('rect', Rectangle(0, 0, 100, 100, {mode = 'line', color = {.8, .3, .3}, centered = true}))
 	@.camera:set_position(400, 300)
+
+	@.delta = 0
 end
 
 function Play_scene:update(dt)
@@ -27,30 +29,44 @@ function Play_scene:update(dt)
 	local rect = @:get('rect')
 	
 	if rect then
-	if down('z') then rect.pos.y -= 300 * dt end
-	if down('s') then rect.pos.y += 300 * dt end
-	if down('q') then rect.pos.x -= 300 * dt end
-	if down('d') then rect.pos.x += 300 * dt end
+		if down('z') then rect.pos.y -= 300 * dt end
+		if down('s') then rect.pos.y += 300 * dt end
+		if down('q') then rect.pos.x -= 300 * dt end
+		if down('d') then rect.pos.x += 300 * dt end
+	end
+
+	@.delta -= 1
+	if math.abs(@.delta) > front_grass:getWidth() then 
+		@.delta = 0 
 	end
 end
 
 function Play_scene:draw_inside_camera_bg()
-	lg.draw(clouds         , @.camera.x    ,-10, _, 2)
-	lg.draw(mountains      , @.camera.x*0.5,  0, _, 2)
-	lg.draw(forest         , @.camera.x*0.4,  0, _, 2)
-	lg.draw(back_grass_tree, @.camera.x*0.2,  0, _, 2)
+	lg.draw(clouds         , @.delta * .6,                         0, _, 2)
+	lg.draw(clouds         , @.delta * .6 + clouds:getWidth()    , 0, _, 2)
+	lg.draw(clouds         , @.delta * .6 + clouds:getWidth() * 2, 0, _, 2)
+	
+	lg.draw(mountains      , @.delta * .7,                           0, _, 2)
+	lg.draw(mountains      , @.delta * .7 +mountains:getWidth()    , 0, _, 2)
+	lg.draw(mountains      , @.delta * .7 +mountains:getWidth() * 2, 0, _, 2)
+	
+	lg.draw(forest         , @.delta * .8,                        0, _, 2)
+	lg.draw(forest         , @.delta * .8 +forest:getWidth()    , 0, _, 2)
+	lg.draw(forest         , @.delta * .8 +forest:getWidth() * 2, 0, _, 2)
+	
+	lg.draw(back_grass_tree, @.delta * .9,                                 0, _, 2)
+	lg.draw(back_grass_tree, @.delta * .9 +back_grass_tree:getWidth()    , 0, _, 2)
+	lg.draw(back_grass_tree, @.delta * .9 +back_grass_tree:getWidth() * 2, 0, _, 2)
 end
 
 function Play_scene:draw_inside_camera_fg()
 	local rect = @:get('rect')
 
 	if rect then
-	@.bird_anim:draw(rect.pos.x, rect.pos.y)
+		@.bird_anim:draw(rect.pos.x, rect.pos.y)
 	end
 
-	lg.draw(front_grass, 0,  0, _, 2)
+	lg.draw(front_grass, @.delta,                              0, _, 2)
+	lg.draw(front_grass, @.delta + front_grass:getWidth()    , 0, _, 2)
+	lg.draw(front_grass, @.delta + front_grass:getWidth() * 2, 0, _, 2)
 end
-
-
-
-
