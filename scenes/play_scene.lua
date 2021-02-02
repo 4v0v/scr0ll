@@ -48,7 +48,7 @@ end
 
 
 function Play_scene:keypressed(key)
-	if key == 'escape' then game:change_scene_with_transition('menu') end
+	if key == 'escape' then change_scene_with_transition('menu') end
 
 	local bird = @:get('bird')
 

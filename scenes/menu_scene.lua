@@ -26,12 +26,16 @@ function Menu_scene:update(dt)
 
 	if pressed('escape') then love.event.quit() end
 
+	if down('m_1') then
+		print('lol')
+	end
+
 	local play_btn = @:get('play_btn')
 	local quit_btn = @:get('quit_btn')
 
 	if point_rect_collision({lm:getX(), lm:getY()}, play_btn:aabb()) then
 		@:once(fn() play_btn.scale_spring:change(1.5) end, 'is_inside_play')
-		if pressed('m_1') then game:change_scene_with_transition('play') end
+		if pressed('m_1') then change_scene_with_transition('play') end
 	else 
 		if @.trigger:remove('is_inside_play') then play_btn.scale_spring:change(1) end
 	end
