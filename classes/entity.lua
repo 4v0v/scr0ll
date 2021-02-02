@@ -1,7 +1,7 @@
 Entity = Class:extend('Entity')
 
 function Entity:new(opts)
-	@.trigger   = Trigger()
+	@.trigger = Trigger()
 	@.dead    = false
 	@.scene   = {}
 	@.id      = ''
@@ -42,8 +42,11 @@ function Entity:set_state(state)
 	@.state = state
 end
 
-function Entity:is_state(state)
-	return @.state == state
+function Entity:is_state(...)
+	ifor {...} do
+		if @.state == it then return true end
+	end
+	return false
 end
 
 function Entity:get_state()

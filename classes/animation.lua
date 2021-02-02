@@ -108,6 +108,10 @@ function Animation:set_actions(actions)
 	@.actions = actions
 end
 
+function Animation:set_delay(delay)
+	@.delay = delay
+end
+
 function Animation:clone()
 	return Animation(@.delay, @.frames, @.mode, @.actions)
 end
