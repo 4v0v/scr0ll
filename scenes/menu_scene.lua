@@ -26,10 +26,6 @@ function Menu_scene:update(dt)
 
 	if pressed('escape') then love.event.quit() end
 
-	if down('m_1') then
-		print('lol')
-	end
-
 	local play_btn = @:get('play_btn')
 	local quit_btn = @:get('quit_btn')
 

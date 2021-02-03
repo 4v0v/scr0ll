@@ -37,39 +37,33 @@ function love.run()
 			if name == 'mousereleased' then GAME.input.current['m_'.. c] = false end
 			if name == 'keypressed'    then GAME.input.current[a]        = true if c then GAME.input.previous[a] = false end end -- c => isRepeat
 			if name == 'keyreleased'   then GAME.input.current[a]        = false end
-
 			if GAME.current_scene_id ~= '' and GAME.scenes[GAME.current_scene_id][name] then
 				GAME.scenes[GAME.current_scene_id][name](GAME.scenes[GAME.current_scene_id], a, b, c, d, e, f)
 			end
-
 			love.handlers[name](a, b, c, d, e, f)
 		end
 
 		GAME.accumulator = GAME.accumulator + lt.step()
 		while GAME.accumulator >= GAME.fixed_dt do
-
 			GAME.trigger:update(GAME.fixed_dt)
 			if GAME.current_scene_id ~= '' then 
 				GAME.scenes[GAME.current_scene_id]:update(GAME.fixed_dt)
 			end
-
 			for k, v in pairs(GAME.input.current) do GAME.input.previous[k] = v end
 			GAME.accumulator = GAME.accumulator - GAME.fixed_dt
 		end
 
 		lg.origin()
 		lg.clear(lg.getBackgroundColor())
-
 		if GAME.current_scene_id ~= '' then 
 			GAME.scenes[GAME.current_scene_id]:draw()
 		end
-	
-		local _r, _g, _b, _a = lg.getColor()
+		local _color = {lg.getColor()}
 		lg.setColor(GAME.bg_color.r, GAME.bg_color.g, GAME.bg_color.b, GAME.bg_color.a)
 		lg.rectangle("fill", 0, 0, lg.getWidth(), lg.getHeight())
-		lg.setColor(_r, _g, _b, _a)
-
+		lg.setColor(_color)
 		lg.present()
+
 		lt.sleep(0.001)
 	end
 end
@@ -79,6 +73,7 @@ function load_game()
 	add_scene('play', Play_scene())
 
 	change_scene('play')
+
 end
 
 function add_scene(id, scene)
