@@ -7,7 +7,7 @@ function Bee:new(x, y )
 	Bee.super.new(@, {x = x, y = y} )
 
 	@.bee_anim   = Animation(.1, Bee.fly_frames)
-	@.sin        = Sinewave(0, 150, 1)
+	@.sin        = Sinewave(0, 150, 2)
 	@.inital_pos = @.pos.y
 end
 
