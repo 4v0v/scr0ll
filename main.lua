@@ -73,7 +73,6 @@ function load_game()
 	add_scene('play', Play_scene())
 
 	change_scene('play')
-
 end
 
 function add_scene(id, scene)

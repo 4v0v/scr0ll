@@ -15,7 +15,7 @@ function AnimationFrames:new(image, frame_w, frame_h, ox, oy, frames_list)
 	@.ox       = ox or 0
 	@.oy       = oy or 0
 	@.frames   = map(frames_list, fn(frame)
-		return love.graphics.newQuad(
+		return lg.newQuad(
 			(frame[1]-1) * @.frame_w + @.ox, 
 			(frame[2]-1) * @.frame_h + @.oy, 
 			@.frame_w, @.frame_h, 
@@ -25,7 +25,7 @@ function AnimationFrames:new(image, frame_w, frame_h, ox, oy, frames_list)
 end
 
 function AnimationFrames:draw(frame, x, y, r, sx, sy, ox, oy)
-  love.graphics.draw(
+  lg.draw(
 		@.image, 
 		@.frames[frame], 
 		x, y, r or 0, sx or 1, sy or sx or 1, 

@@ -11,17 +11,21 @@ function Play_scene:new()
 	Play_scene.super.new(@)
 
 	@:add('bird', Bird(100, 100))
+
+
+	@:add(Bee(500, 200))
+	@:after(.2, fn() @:add(Bee(580, 200)) end)
+	@:after(.4, fn() @:add(Bee(660, 200)) end)
 	
 	@.camera:set_position(400, 300)
 
 	@.delta = 0
-	@:always(fn() @.delta -= 1 end, 'add_delta')
+	@:always(fn() @.delta -= 3 end, 'add_delta')
 end
 
 function Play_scene:update(dt)
 	Play_scene.super.update(@, dt)
-
-	
+	if pressed('escape') then change_scene_with_transition('menu') end
 end
 
 function Play_scene:draw_inside_camera_bg()

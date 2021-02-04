@@ -1,9 +1,9 @@
 Sinewave = Class:extend('Sinewave')
 
-function Sinewave:new(value, speed, amplitude)
+function Sinewave:new(value, amplitude, speed)
 	@.initial = value     or 0
-	@.speed   = speed     or 1
 	@.amp     = amplitude or 1
+	@.speed   = speed     or 1
 	@.time    = 0
 	@.sine    = 0
 	@.playing = true
