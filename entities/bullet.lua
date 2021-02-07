@@ -18,3 +18,12 @@ end
 function Bullet:draw()
 	lg.draw(beams, red_beam_quad, @.pos.x, @.pos.y, _, 1, 1)
 end
+
+function Bullet:aabb()
+	return {
+		@.pos.x,
+		@.pos.y,
+		120,
+		80,
+	}
+end

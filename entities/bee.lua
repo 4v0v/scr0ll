@@ -22,3 +22,12 @@ end
 function Bee:draw()
 	@.bee_anim:draw(@.pos.x, @.pos.y, _ , -2, 2)
 end
+
+function Bee:aabb()
+	return {
+		@.pos.x,
+		@.pos.y,
+		bees:getWidth() / 8 * 2,
+		bees:getHeight() / 5 * 2,
+	}
+end

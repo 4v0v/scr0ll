@@ -33,9 +33,7 @@ function Entity:is_type(...)
 end
 
 function Entity:kill()
-	@.trigger:destroy()
 	@.dead  = true
-	@.scene = nil
 end
 
 function Entity:set_state(state)

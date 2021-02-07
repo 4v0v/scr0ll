@@ -36,7 +36,6 @@ function Bird:update(dt)
 		if @.tilt != 0 then @.tilt = 0 end
 	end
 
-
 	if down('space') then
 		@:every_immediate(.3, fn() @.scene:add(Bullet(@.pos.x, @.pos.y)) end, _, 'shoot')
 	else

@@ -1,11 +1,11 @@
 Scene = Class:extend('Scene')
 
 function Scene:new()
-	@.id     = ''
-	@.trigger  = Trigger()
-	@.camera = Camera()
-	@._queue = {}
-	@._ents  = {}
+	@.id      = ''
+	@.trigger = Trigger()
+	@.camera  = Camera()
+	@._queue  = {}
+	@._ents   = {}
 	@._ents_by_id   = {}
 	@._ents_by_type = {}
 end
@@ -22,6 +22,8 @@ function Scene:update(dt)
 	-- delete dead entities
 	rfor @._ents do 
 		if it.dead then
+			it.scene = nil
+			it.trigger:destroy()
 			for type in it.types do @._ents_by_type[type][it.id] = nil end
 			@._ents_by_id[it.id] = nil
 			table.remove(@._ents, key)
@@ -94,11 +96,11 @@ function Scene:add(a, b, c)
 	entity.types = types  
 	entity.id    = id
 
-	-- TODO: what to do wehn already existing id ?
+	-- TODO: what to do whenn already existing id ?
 	if @._ents_by_id[id] then
 		print('id already exist') 
 	else
-		entity.scene  = @
+		entity.scene = @
 		@._queue[id] = entity
 	end 
 
@@ -116,14 +118,24 @@ function Scene:get(id)
 	return entity
 end
 
-function Scene:get_all()
-	return @._ents
+function Scene:get_all_entities()
+	local entities = {}
+
+	for @._ents do
+		if !it.dead then insert(entities, it) end
+	end
+
+	return entities
 end
 
 function Scene:get_by_type(...)
 	local entities = {}
 	local types    = {...}
 	local filtered = {} -- filter duplicate entities using id
+
+	if types[1] == 'All' then 
+		return @:get_all_entities() 
+	end
 
 	for type in types do
 		if @._ents_by_type[type] then
