@@ -25,8 +25,8 @@ end
 
 function Bee:aabb()
 	return {
-		@.pos.x,
-		@.pos.y,
+		@.pos.x - (bees:getWidth() / 8 * 2)/ 2,
+		@.pos.y - (bees:getHeight() / 5 * 2) / 2,
 		bees:getWidth() / 8 * 2,
 		bees:getHeight() / 5 * 2,
 	}

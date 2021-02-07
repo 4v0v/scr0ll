@@ -70,6 +70,14 @@ function Play_scene:draw_inside_camera_bg()
 end
 
 function Play_scene:draw_inside_camera_fg()
+
+	for @:get_all_entities() do
+		if it.aabb then 
+			local aabb = it:aabb()
+			lg.rectangle('line', aabb[1], aabb[2], aabb[3], aabb[4])
+		end
+	end
+
 	lg.draw(front_grass, @.delta % front_grass:getWidth() * 2                             , 30, _, 2)
 	lg.draw(front_grass, @.delta % front_grass:getWidth() * 2 + front_grass:getWidth() * 2, 30, _, 2)
 	lg.draw(front_grass, @.delta % front_grass:getWidth() * 2 - front_grass:getWidth() * 2, 30, _, 2)
