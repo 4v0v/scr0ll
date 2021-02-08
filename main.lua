@@ -114,3 +114,14 @@ function down(key)
 		return lk.isDown(key) 
 	end 
 end
+
+COLORS = {
+	BLACK   = {0, 0, 0},
+	WHITE   = {1, 1, 1},
+	RED     = {1, 0, 0},
+	GREEN   = {0, 1, 0},
+	BLUE    = {0, 0, 1},
+	CYAN    = {0, 1, 1},
+	YELLOW  = {1, 1, 0},
+	MAGENTA = {1, 0, 1},
+}

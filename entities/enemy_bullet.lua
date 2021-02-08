@@ -6,6 +6,7 @@ Enemy_Bullet.blue_beam_quad = lg.newQuad(30, 120, 120, 80, Enemy_Bullet.beams:ge
 function Enemy_Bullet:new(x, y)
 	Enemy_Bullet.super.new(@, {x = x, y = y} )
 
+	@.damage     = 10
 	@:after(5, fn() self:kill() end)
 end
 

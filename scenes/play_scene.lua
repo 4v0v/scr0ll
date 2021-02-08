@@ -19,34 +19,46 @@ function Play_scene:new()
 
 	@.delta = 0
 	@:always(fn() @.delta -= 3 end, 'add_delta')
+
+	@.total_hp = 100
+	@.hp       = @.total_hp
+	@.tween_hp = Tween(@.hp, 'in-out-cubic')
 end
 
 function Play_scene:update(dt)
 	Play_scene.super.update(@, dt)
+	@.tween_hp:update(dt)
+
 	if pressed('escape') then change_scene_with_transition('menu') end
 
 	local bees     = @:get_by_type('Bee')
 	local bird     = @:get('bird')
 	local bullets  = @:get_by_type('Bullet')
-	local e_bullets = @:get_by_type('Enemy_Bullet')
+	local ebullets = @:get_by_type('Enemy_Bullet')
 	
 	ifor bullet in bullets do
 		ifor bee in bees do 
 			if rect_rect_collision(bee:aabb(), bullet:aabb()) then
+				bee:hit(bullet.damage)
 				bullet:kill()
-				bee:kill()
 			end
 		end
 	end
 
-	ifor e_bullets do 
-		if rect_rect_collision(it:aabb(), bird:aabb()) then
+	ifor bullet in ebullets do 
+		if rect_rect_collision(bullet:aabb(), bird:aabb()) then
 			@:shake(20)
 			bird:hit()
-			it:kill()
+			bullet:kill()
+			@.hp -= bullet.damage
+			
+			if @.hp <= 0 then 
+				@.hp = @.total_hp 
+			end
+
+			@.tween_hp:tween(@.hp, .2)
 		end
 	end
-
 
 	if @:count('Bee') == 0 then
 		@:once(fn()
@@ -74,14 +86,22 @@ function Play_scene:draw_inside_camera_bg()
 end
 
 function Play_scene:draw_inside_camera_fg()
-	for @:get_all_entities() do
-		if it.aabb then 
-			local aabb = it:aabb()
-			lg.rectangle('line', aabb[1], aabb[2], aabb[3], aabb[4])
-		end
-	end
+	-- for @:get_all_entities() do
+	-- 	if it.aabb then 
+	-- 		local aabb = it:aabb()
+	-- 		lg.rectangle('line', aabb[1], aabb[2], aabb[3], aabb[4])
+	-- 	end
+	-- end
 
 	lg.draw(front_grass, @.delta % front_grass:getWidth() * 2                             , 160, _, 2)
 	lg.draw(front_grass, @.delta % front_grass:getWidth() * 2 + front_grass:getWidth() * 2, 160, _, 2)
 	lg.draw(front_grass, @.delta % front_grass:getWidth() * 2 - front_grass:getWidth() * 2, 160, _, 2)
+end
+
+function Play_scene:draw_outside_camera_fg()
+	lg.setColor(COLORS.RED)
+	lg.rectangle('fill', 10 ,10, 400 * @.tween_hp:get() / @.total_hp, 30)
+
+	lg.setColor(COLORS.WHITE)
+	lg.rectangle('line', 10 ,10, 400, 30)
 end

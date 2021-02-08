@@ -6,6 +6,7 @@ Bullet.red_beam_quad = lg.newQuad(30, 200, 120, 80, Bullet.beams:getWidth(), Bul
 function Bullet:new(x, y)
 	Bullet.super.new(@, {x = x, y = y} )
 
+	@.damage = 10
 	@:after(5, fn() self:kill() end)
 end
 
@@ -21,9 +22,9 @@ end
 
 function Bullet:aabb()
 	return {
-		@.pos.x,
-		@.pos.y,
-		120,
-		80,
+		@.pos.x + 40,
+		@.pos.y + 23,
+		45,
+		20,
 	}
 end

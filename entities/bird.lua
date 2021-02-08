@@ -1,18 +1,14 @@
 Bird = Entity:extend('Bird')
 
 Bird.fly_frames = AnimationFrames('assets/images/bird.png', 207, 206, _, _, '1-1, 2-1, 3-1, 4-1, 5-1, 6-1, 7-1, 8-1, 9-1')
-
-
-local fill_shader = lg.newShader("assets/shaders/fill.glsl")
+Bird.fill_shader = lg.newShader("assets/shaders/fill.glsl")
 
 function Bird:new(x, y )
 	Bird.super.new(@, {x = x, y = y} )
 
 	@.bird_anim = Animation(.1, @.fly_frames)
-
-	@.tilt = 0
-
-	@.hit_alpha = Tween(0)
+	@.tilt      = 0
+	@.hit_alpha = Tween(0) 
 end
 
 function Bird:update(dt)
@@ -48,7 +44,6 @@ function Bird:update(dt)
 	else
 		@.trigger:remove('shoot')
 	end
-
 end
 
 function Bird:draw()
@@ -56,7 +51,7 @@ function Bird:draw()
 
 	if @.hit_alpha:get() > 0 then
 		lg.setColor(1, 0 ,0, @.hit_alpha:get())
-		lg.setShader(fill_shader)
+		lg.setShader(@.fill_shader)
 		@.bird_anim:draw(@.pos.x, @.pos.y, @.tilt)
 		lg.setShader()
 	end
@@ -72,6 +67,6 @@ function Bird:aabb()
 end
 
 function Bird:hit()
-	@.hit_alpha:tween(1, 0)
+	@.hit_alpha:set(1)
 	@.hit_alpha:tween(0, .2)
 end
