@@ -25,23 +25,30 @@ function Play_scene:update(dt)
 	Play_scene.super.update(@, dt)
 	if pressed('escape') then change_scene_with_transition('menu') end
 
-	local bees = @:get_by_type('Bee')
-
-	local bullets = @:get_by_type('Bullet')
+	local bees     = @:get_by_type('Bee')
+	local bird     = @:get('bird')
+	local bullets  = @:get_by_type('Bullet')
+	local e_bullets = @:get_by_type('Enemy_Bullet')
 	
-	ifor bee in bees do 
-		ifor bullet in bullets do
-			if rect_rect_collision(bee:aabb(), bullet:aabb()) then 
-
+	ifor bullet in bullets do
+		ifor bee in bees do 
+			if rect_rect_collision(bee:aabb(), bullet:aabb()) then
 				bullet:kill()
 				bee:kill()
 			end
 		end
 	end
 
-	local bees_count = @:count('Bee')
+	ifor e_bullets do 
+		if rect_rect_collision(it:aabb(), bird:aabb()) then
+			@:shake(20)
+			bird:hit()
+			it:kill()
+		end
+	end
 
-	if bees_count == 0 then
+
+	if @:count('Bee') == 0 then
 		@:once(fn()
 			@:after(1  , fn() @:add(Bee(500, 200)) end)
 			@:after(1.2, fn() @:add(Bee(580, 200)) end)
@@ -49,28 +56,24 @@ function Play_scene:update(dt)
 			@:after(1.6, fn() @.trigger:remove('spawn_bees') end)
 		end, 'spawn_bees')
 	end
-
-	@:once(fn() @:every(.5, fn() print(@:count('All')) end)  end, 'print_ent_numbers')
-
 end
 
 function Play_scene:draw_inside_camera_bg()
 	lg.draw(clouds    , @.delta * .1 % clouds:getWidth()     * 2                            , 0, _, 2)
 	lg.draw(clouds    , @.delta * .1 % clouds:getWidth()     * 2 - clouds:getWidth()     * 2, 0, _, 2)
 	lg.draw(clouds    , @.delta * .1 % clouds:getWidth()     * 2 + clouds:getWidth()     * 2, 0, _, 2)
-	lg.draw(mountains , @.delta * .3 % mountains:getWidth()  * 2                            , 0, _, 2)
-	lg.draw(mountains , @.delta * .3 % mountains:getWidth()  * 2 - mountains:getWidth()  * 2, 0, _, 2)
-	lg.draw(mountains , @.delta * .3 % mountains:getWidth()  * 2 + mountains:getWidth()  * 2, 0, _, 2)
-	lg.draw(forest    , @.delta * .5 % forest:getWidth()     * 2                            , 0, _, 2)
-	lg.draw(forest    , @.delta * .5 % forest:getWidth()     * 2 - forest:getWidth()     * 2, 0, _, 2)
-	lg.draw(forest    , @.delta * .5 % forest:getWidth()     * 2 + forest:getWidth()     * 2, 0, _, 2)
-	lg.draw(back_grass, @.delta * .7 % back_grass:getWidth() * 2                            , 0, _, 2)
-	lg.draw(back_grass, @.delta * .7 % back_grass:getWidth() * 2 - back_grass:getWidth() * 2, 0, _, 2)
-	lg.draw(back_grass, @.delta * .7 % back_grass:getWidth() * 2 + back_grass:getWidth() * 2, 0, _, 2)
+	lg.draw(mountains , @.delta * .3 % mountains:getWidth()  * 2                            , 0 + 40, _, 2)
+	lg.draw(mountains , @.delta * .3 % mountains:getWidth()  * 2 - mountains:getWidth()  * 2, 0 + 40, _, 2)
+	lg.draw(mountains , @.delta * .3 % mountains:getWidth()  * 2 + mountains:getWidth()  * 2, 0 + 40, _, 2)
+	lg.draw(forest    , @.delta * .5 % forest:getWidth()     * 2                            , 0 + 80, _, 2)
+	lg.draw(forest    , @.delta * .5 % forest:getWidth()     * 2 - forest:getWidth()     * 2, 0 + 80, _, 2)
+	lg.draw(forest    , @.delta * .5 % forest:getWidth()     * 2 + forest:getWidth()     * 2, 0 + 80, _, 2)
+	lg.draw(back_grass, @.delta * .7 % back_grass:getWidth() * 2                            , 0 + 120, _, 2)
+	lg.draw(back_grass, @.delta * .7 % back_grass:getWidth() * 2 - back_grass:getWidth() * 2, 0 + 120, _, 2)
+	lg.draw(back_grass, @.delta * .7 % back_grass:getWidth() * 2 + back_grass:getWidth() * 2, 0 + 120, _, 2)
 end
 
 function Play_scene:draw_inside_camera_fg()
-
 	for @:get_all_entities() do
 		if it.aabb then 
 			local aabb = it:aabb()
@@ -78,7 +81,7 @@ function Play_scene:draw_inside_camera_fg()
 		end
 	end
 
-	lg.draw(front_grass, @.delta % front_grass:getWidth() * 2                             , 30, _, 2)
-	lg.draw(front_grass, @.delta % front_grass:getWidth() * 2 + front_grass:getWidth() * 2, 30, _, 2)
-	lg.draw(front_grass, @.delta % front_grass:getWidth() * 2 - front_grass:getWidth() * 2, 30, _, 2)
+	lg.draw(front_grass, @.delta % front_grass:getWidth() * 2                             , 160, _, 2)
+	lg.draw(front_grass, @.delta % front_grass:getWidth() * 2 + front_grass:getWidth() * 2, 160, _, 2)
+	lg.draw(front_grass, @.delta % front_grass:getWidth() * 2 - front_grass:getWidth() * 2, 160, _, 2)
 end

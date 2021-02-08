@@ -1,7 +1,7 @@
 Bullet = Entity:extend('Bullet')
 
-local beams = lg.newImage('assets/images/beams.png')
-local red_beam_quad = lg.newQuad(30, 200, 120, 80, beams:getWidth(), beams:getHeight())
+Bullet.beams = lg.newImage('assets/images/beams.png')
+Bullet.red_beam_quad = lg.newQuad(30, 200, 120, 80, Bullet.beams:getWidth(), Bullet.beams:getHeight())
 
 function Bullet:new(x, y)
 	Bullet.super.new(@, {x = x, y = y} )
@@ -16,7 +16,7 @@ function Bullet:update(dt)
 end
 
 function Bullet:draw()
-	lg.draw(beams, red_beam_quad, @.pos.x, @.pos.y, _, 1, 1)
+	lg.draw(@.beams, @.red_beam_quad, @.pos.x, @.pos.y, _, 1, 1)
 end
 
 function Bullet:aabb()

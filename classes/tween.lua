@@ -28,13 +28,15 @@ end
 function Tween:tween(target, time, method, ...)
 	local args = {...}
 	if #args == 0 then args = @.args end
-
+	if time == 0 then @.current = target end
+	
 	@.elapsed  = 0
-	@.duration = time 
+	@.duration = time
 	@.target   = target
 	@.delta    = target - @.current
 	@.method   = method or @.method
 	@.args     = args
+
 end
 
 function Tween:get() 
