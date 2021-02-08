@@ -36,7 +36,6 @@ function Tween:tween(target, time, method, ...)
 	@.delta    = target - @.current
 	@.method   = method or @.method
 	@.args     = args
-
 end
 
 function Tween:get() 
